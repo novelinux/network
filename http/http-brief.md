@@ -108,10 +108,6 @@ POST方法。虽说POST的功能与GET很相似，但POST的主要目的并不�
 
 [Http POST](https://github.com/novelinux/network/blob/master/http/res/http-post.jpeg "Http POST")
 
-```
-
-```
-
 ### PUT：传输文件
 
 PUT方法用来传输文件。就像FTP协议的文件上传一样，要求在请求报文的主体中包含文件内容，然后保存到请
@@ -250,4 +246,5 @@ Cookie会根据从服务器端发送的响应报文内的一个叫做Set-Cookie�
 后得到之前的状态信息。
 
 [没有Cookie信息状态下的请求](https://github.com/novelinux/network/blob/master/http/res/http-cookie1.jpeg "Http")
+
 [第2次以后（存有Cookie信息状态）的请求](https://github.com/novelinux/network/blob/master/http/res/http-cookie2.jpeg "Http")

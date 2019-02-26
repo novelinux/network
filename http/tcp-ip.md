@@ -45,4 +45,55 @@ TCP（Transmission Con-trol Protocol，传输控制协议）和UDP（User Data P
 地址后转发给链路层。这样一来，发往网络的通信请求就准备齐全了。接收端的服务器在链路层接收到数据，
 按序往上层发送，一直到应用层。当传输到应用层，才能算真正接收到由客户端发送过来的HTTP请求。
 
-[Http传输流程](https://github.com/novelinux/network/blob/master/http/res/tcp-ip-transport.jpeg "Http Transport")
+[Http传输流程](https://github.com/novelinux/network/blob/master/http/res/http-transport.jpeg "Http Transport")
+
+## 与HTTP关系密切的协议：IP、TCP和DNS
+
+### 负责传输的IP协议
+
+按层次分，IP（Internet Protocol）网际协议位于网络层。Internet Protocol这个名称可能听起来有
+点夸张，但事实正是如此，因为几乎所有使用网络的系统都会用到IP协议。TCP/IP协议族中的IP指的就是网际
+协议，协议名称中占据了一半位置，其重要性可见一斑。可能有人会把“IP”和“IP地址”搞混，“IP”其实是一种
+协议的名称。IP协议的作用是把各种数据包传送给对方。而要保证确实传送到对方那里，则需要满足各类条件。
+其中两个重要的条件是IP地址和MAC地址（Media Access Control Address）。IP地址指明了节点被分配
+到的地址，MAC地址是指网卡所属的固定地址。IP地址可以和MAC地址进行配对。IP地址可变换，但MAC地址基
+本上不会更改。
+
+**使用ARP协议凭借MAC地址进行通信**
+
+IP间的通信依赖MAC地址。在网络上，通信的双方在同一局域网（LAN）内的情况是很少的，通常是经过多台计
+算机和网络设备中转才能连接到对方。而在进行中转时，会利用下一站中转设备的MAC地址来搜索下一个中转目
+标。这时，会采用ARP协议（Address Resolution Protocol）。ARP是一种用以解析地址的协议，根据通
+信方的IP地址就可以反查出对应的MAC地址。**没有人能够全面掌握互联网中的传输状况**在到达通信目标前的
+中转过程中，那些计算机和路由器等网络设备只能获悉很粗略的传输路线。这种机制称为路由选择（routing）
+，有点像快递公司的送货过程。想要寄快递的人，只要将自己的货物送到集散中心，就可以知道快递公司是否肯
+收件发货，该快递公司的集散中心检查货物的送达地址，明确下站该送往哪个区域的集散中心。接着，那个区域
+的集散中心自会判断是否能送到对方的家中。我们是想通过这个比喻说明，无论哪台计算机、哪台网络设备，它
+们都无法全面掌握互联网中的细节。
+
+[Ip传输流程](https://github.com/novelinux/network/blob/master/http/res/ip-transport.jpeg "IP Transport")
+
+### 确保可靠性的TCP协议
+
+按层次分，TCP位于传输层，提供可靠的字节流服务。所谓的字节流服务（Byte Stream Service）是指，为
+了方便传输，将大块数据分割成以报文段（segment）为单位的数据包进行管理。而可靠的传输服务是指，能够
+把数据准确可靠地传给对方。一言以蔽之，TCP协议为了更容易传送大数据才把数据分割，而且TCP协议能够确
+认数据最终是否送达到对方。**确保数据能到达目标** 为了准确无误地将数据送达目标处，TCP协议采用了三
+次握手（three-way handshaking）策略。用TCP协议把数据包送出去后，TCP不会对传送后的情况置之不理
+，它一定会向对方确认是否成功送达。握手过程中使用了TCP的标志（flag）——SYN（synchronize）和ACK（
+acknowledgement）。发送端首先发送一个带SYN标志的数据包给对方。接收端收到后，回传一个带有SYN/AC
+K标志的数据包以示传达确认信息。最后，发送端再回传一个带ACK标志的数据包，代表“握手”结束。若在握手
+过程中某个阶段莫名中断，TCP协议会再次以相同的顺序发送相同的数据包。
+
+[TCP传输流程](https://github.com/novelinux/network/blob/master/http/res/tcp-transport.jpeg "TCP Transport")
+
+### 负责域名解析的DNS服务
+
+DNS（Domain Name System）服务是和HTTP协议一样位于应用层的协议。它提供域名到IP地址之间的解析服
+务。计算机既可以被赋予IP地址，也可以被赋予主机名和域名。比如www.hackr.jp。用户通常使用主机名或域
+名来访问对方的计算机，而不是直接通过IP地址访问。因为与IP地址的一组纯数字相比，用字母配合数字的表
+示形式来指定计算机名更符合人类的记忆习惯。但要让计算机去理解名称，相对而言就变得困难了。因为计算机
+更擅长处理一长串数字。为了解决上述的问题，DNS服务应运而生。DNS协议提供通过域名查找IP地址，或逆向
+从IP地址反查域名的服务。
+
+[DNS](https://github.com/novelinux/network/blob/master/http/res/dns.jpeg "DNS")

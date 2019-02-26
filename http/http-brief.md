@@ -248,3 +248,27 @@ Cookie会根据从服务器端发送的响应报文内的一个叫做Set-Cookie�
 [没有Cookie信息状态下的请求](https://github.com/novelinux/network/blob/master/http/res/http-cookie1.jpeg "Http")
 
 [第2次以后（存有Cookie信息状态）的请求](https://github.com/novelinux/network/blob/master/http/res/http-cookie2.jpeg "Http")
+
+* 请求报文（没有Cookie信息的状态）
+
+```
+GET /reader/ HTTP/1.1
+Host: hackr.jp
+*首部字段内没有Cookie的相关信息
+```
+
+* 响应报文（服务器端生成Cookie信息）
+
+```
+HTTP/1.1 200 OK
+Date: Thu, 12 Jul 2012 07:12:20 GMT
+Server: Apache＜Set-Cookie: sid=1342077140226724; path=/; expires=Wed,10-Oct-12 07:12:20 GMT＞
+Content-Type: text/plain; charset=UTF-8
+```
+
+* 请求报文（自动发送保存着的Cookie信息）
+
+```
+GET /image/ HTTP/1.1Host: hackr.jp
+Cookie: sid=1342077140226724
+```

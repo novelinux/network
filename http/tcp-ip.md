@@ -35,3 +35,14 @@ TCP（Transmission Con-trol Protocol，传输控制协议）和UDP（User Data P
 网络适配器，即网卡），及光纤等物理可见部分（还包括连接器等一切传输媒介）。硬件上的范畴均在链路层的作用范围之内。
 
 ## TCP/IP通信传输流
+
+[TCP/IP传输流程](https://github.com/novelinux/network/blob/master/http/res/tcp-ip-transport.jpeg "TCP/IP Transport")
+
+利用TCP/IP协议族进行网络通信时，会通过分层顺序与对方进行通信。发送端从应用层往下走，接收端则往应用层往上走。
+我们用HTTP举例来说明，首先作为发送端的客户端在应用层（HTTP协议）发出一个想看某个Web页面的HTTP
+请求。接着，为了传输方便，在传输层（TCP协议）把从应用层处收到的数据（HTTP请求报文）进行分割，
+并在各个报文上打上标记序号及端口号后转发给网络层。在网络层（IP协议），增加作为通信目的地的MAC
+地址后转发给链路层。这样一来，发往网络的通信请求就准备齐全了。接收端的服务器在链路层接收到数据，
+按序往上层发送，一直到应用层。当传输到应用层，才能算真正接收到由客户端发送过来的HTTP请求。
+
+[Http传输流程](https://github.com/novelinux/network/blob/master/http/res/tcp-ip-transport.jpeg "Http Transport")
